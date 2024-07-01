@@ -1,68 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define size 100
+#include<string.h>
 int count;
-int partition(int A[size],int l,int r)
+int bfsm(char T[20],char P[10])
 {
-
-    int i,j,pivot,temp;
-    pivot=A[l];
-    i=l+1;
-    j=r;
-    while(1)
+    int m,n,i,j;
+    n=strlen(T);
+    m=strlen(P);
+    for(i=0;i<=n-m;i++)
     {
-
-        while(pivot>=A[i] && i<=r)
-        {
-
-            count++;
-            i++;
-        }
-        while(pivot<A[j])
-        {
-            j--;
-            count++;
-        }
+        j=0;
         count++;
-
-        if(i<j)
+        while(j<m && P[j]==T[i+j])
         {
-
-            temp=A[i];
-            A[i]=A[j];
-            A[j]=temp;
+            j=j+1;
         }
-        else{
-            temp=A[j];
-            A[j]=A[l];
-            A[l]=temp;
-            return j;
-        }
+        if(j==m)
+            return (i+1);
     }
+    return -1;
 }
-void quicksort(int A[size],int l,int r)
-{
 
-    int s;
-    if(l<r)
-    {
-        s=partition(A,l,r);
-        quicksort(A,l,s-1);
-        quicksort(A,s+1,r);
-    }
-}
 int main()
 {
-   int i,A[size],n;
-    printf("\n read array size:");
-    scanf("%d",&n);
-    printf("\n read elements \n");
-    for(i=0;i<=n-1;i++)
-    scanf("%d",&A[i]);
-    quicksort(A,0,n-1);
-    printf("\n sorted elements are \n");
-    for(i=0;i<=n-1;i++)
-    printf("%d\t",A[i]);
-    printf("\n count= %d",count);
-    return 0;
+    char T[20],P[20],flag;
+    printf("enter the text:\n");
+    scanf("%s",&T);
+    printf("enter the pattern to search");
+    scanf("%s",&P);
+    flag=bfsm(T,P);
+    if(flag==-1)
+        printf("pattern is found");
+    else
+        printf("pattern at the position %d", (flag));
+
+
 }
